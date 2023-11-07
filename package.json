@@ -1,0 +1,14 @@
+{
+  "name": "scoop-witness-api",
+  "version": "0.0.1",
+  "description": "A simple REST API for witnessing the web using the Scoop web archiving capture engine.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@harvard-lil/scoop": "^0.6.0"
+  }
+}

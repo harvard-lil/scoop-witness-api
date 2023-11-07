@@ -1,0 +1,12 @@
+node_modules
+storage
+*.pyc
+*.db
+notes.md
+.DS_Store
+test.sh
+tmp.py
+.env
+*.pem
+access_key.txt
+scoop_witness_api/config.py
