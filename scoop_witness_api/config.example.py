@@ -16,7 +16,7 @@ ACCESS_KEY_SALT = b"$2b$12$rXmm9AWx82fxw9Jbs1PXI.zebeXu4Ydi1huwxyH5k9flyhccBBTxa
 MAX_PENDING_CAPTURES = 300
 """ Stop accepting new capture requests if there are over X captures in the queue. """
 
-EXPOSE_SCOOP_LOGS = True
+EXPOSE_SCOOP_LOGS = False
 """ If `True`, Scoop logs will be exposed at API level by capture_to_dict. Handle with care. """
 
 EXPOSE_SCOOP_CAPTURE_SUMMARY = True
