@@ -117,7 +117,7 @@ This application was built using [Flask](https://flask.palletsprojects.com/) for
 Custom commands were created as a way to operate the application and administer it.  
 
 <details>
-    <summary><h3>Listing available commands</h3></summary>
+    <summary><strong>Listing available commands</strong></summary>
 
 ```bash
 poetry run flask --help`
@@ -127,7 +127,7 @@ poetry run flask create-access-key --help
 </details>
 
 <details>
-    <summary><h3>create-tables</h3></summary>
+    <summary><strong>create-tables</strong></summary>
 
 ```bash
 poetry run flask create-tables
@@ -137,7 +137,7 @@ Creates a new SQLite database if needed and populates it with tables.
 </details>
 
 <details>
-    <summary><h3>create-access-key</h3></summary>
+    <summary><strong>create-access-key</strong></summary>
 
 ```bash
 poetry run flask create-access-key --label "John Doe"
@@ -147,7 +147,7 @@ Creates a new API access key. Said access key will only be displayed once, as a 
 </details>
 
 <details>
-    <summary><h3>cancel-access-key</h3></summary>
+    <summary><strong>cancel-access-key</strong></summary>
 
 ```bash
 poetry run flask cancel-access-key --id_access_key 1
@@ -157,7 +157,7 @@ Makes a given access key inoperable.
 </details>
 
 <details>
-    <summary><h3>status</h3></summary>
+    <summary><strong>status</strong></summary>
 
 ```bash
 poetry run flask status
@@ -167,7 +167,7 @@ Lists access key ids, as well as pending and started captures.
 </details>
 
 <details>
-    <summary><h3>start-capture-process</h3></summary>
+    <summary><strong>start-capture-process</strong></summary>
 
 ```bash
 poetry run flask start-capture-process
@@ -191,7 +191,7 @@ poetry run flask start-capture-process --proxy-port 9905
 </details>
 
 <details>
-    <summary><h3>start-parallel-capture-processes</h3></summary>
+    <summary><strong>start-parallel-capture-processes</strong></summary>
 
 ```bash
 poetry run flask start-parallel-capture-processes
@@ -201,7 +201,7 @@ Starts parallel capture processes, the number of which is determined at [applica
 </details>
 
 <details>
-    <summary><h3>cleanup</h3></summary>
+    <summary><strong>cleanup</strong></summary>
 
 ```bash
 poetry run flask cleanup
@@ -214,7 +214,7 @@ This command should ideally be run on a scheduler.
 </details>
 
 <details>
-    <summary><h3>inspect-capture</h3></summary>
+    <summary><strong>inspect-capture</strong></summary>
 
 ```bash
 poetry run flask inspect-capture --id_capture "8130d6fe-4adb-4142-a685-00a64bb6ff29"
@@ -234,14 +234,14 @@ Unless specified otherwise, every capture-related object returned by the API is 
 
 
 <details>
-    <summary><h3>[GET] /</h3></summary>
+    <summary><strong>[GET] /</strong></summary>
 
 Simple _"ping"_ route to ensure the API is running.
 Returns HTTP 200 and an empty body.
 </details>
 
 <details>
-    <summary><h3>[POST] /capture</h3></summary>
+    <summary><strong>[POST] /capture</strong></summary>
 
 Creates a capture request.
 
@@ -281,7 +281,7 @@ The `follow` property is a direct link to `[GET] /capture/<id_capture>`, describ
 </details>
 
 <details>
-    <summary><h3>[GET] /capture/&lt;id_capture&gt;</h3></summary>
+    <summary><strong>[GET] /capture/&lt;id_capture&gt;</strong></summary>
 
 Returns information about a specific capture.
 
@@ -315,7 +315,7 @@ The entries under `artifacts` are direct links to `[GET] /artifact/<id_capture>/
 </details>
 
 <details>
-    <summary><h3>[GET] /artifact/&lt;id_capture&gt;/&lt;filename&gt;</h3></summary>
+    <summary><strong>[GET] /artifact/&lt;id_capture&gt;/&lt;filename&gt;</strong></summary>
 
 Allows for accessing and downloading artifacts generated as part of the capture process.
 
