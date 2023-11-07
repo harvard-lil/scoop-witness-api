@@ -1,6 +1,6 @@
 # Scoop Witness API 🍨
 
-[![Linting](https://github.com/harvard-lil/scoop-witness-api/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/harvard-lil/scoop-witness-api/actions/workflows/lint.yml) [![Test suite](https://github.com/harvard-lil/scoop-witness-api/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/harvard-lil/scoop-witness-api/actions/workflows/test.yml)
+[![Linting](https://github.com/harvard-lil/scoop-witness-api/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/harvard-lil/scoop-witness-api/actions/workflows/lint.yml) [![Test suite](https://github.com/harvard-lil/scoop-witness-api/actions/workflows/tests.yml/badge.svg)](https://github.com/harvard-lil/scoop-witness-api/actions/workflows/tests.yml)
 
 A simple REST API for witnessing the web using the Scoop web archiving capture engine.
 
