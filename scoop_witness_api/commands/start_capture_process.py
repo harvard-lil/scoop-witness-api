@@ -11,7 +11,7 @@ import json
 
 import requests
 import click
-from flask import current_app
+from flask import current_app, jsonify
 
 from ..utils import capture_to_dict
 
@@ -259,10 +259,14 @@ def start_capture_process(proxy_port=9000, single_run=False) -> None:
             if capture.callback_url:
                 try:
                     click.echo(f"{log_prefix(capture)} Callback to {capture.callback_url}")
-                    requests.post(capture.callback_url, json=capture_to_dict(capture))
+
+                    # Workaround to be able to use Flask's jsonify, for consistency across the app
+                    json_data = json.loads(jsonify(capture_to_dict(capture)).data.decode("utf-8"))
+
+                    requests.post(capture.callback_url, json=json_data, timeout=10)
                 except Exception:
                     click.echo(f"{log_prefix(capture)} Callback to {capture.callback_url} failed")
-                    pass  # TODO: What should we do if that fails? Do we care?
+                    click.echo(traceback.format_exc())  # Full trace should be in the logs
 
             #
             # Break loop if we are in single-run mode
