@@ -230,7 +230,7 @@ Returns full details about a given capture as JSON. Can be used by administrator
 ## API
 
 **Note:**
-Unless specified otherwise, every capture-related object returned by the API is [generated using `capture_to_dict()`](https://github.com/harvard-lil/scoop-rest-api/blob/main/scoop_witness_api/utils/capture_to_dict.py).
+Unless specified otherwise, every capture-related object returned by the API is [generated using `capture_to_dict()`](https://github.com/harvard-lil/scoop-witness-api/blob/main/scoop_witness_api/utils/capture_to_dict.py).
 
 
 <details>
@@ -336,7 +336,7 @@ Flask applications can be deployed in many different ways, therefore this sectio
 - The `cleanup` command should be run on a scheduler, for example every 5 minutes.
 
 ### Running in headful mode
-The default settings assume that [Scoop runs in headful mode](https://github.com/harvard-lil/scoop-rest-api/blob/main/scoop_witness_api/config.py#L88), which [generally yields better results](https://github.com/harvard-lil/scoop#should-i-run-scoop-in-headful-mode). 
+The default settings assume that [Scoop runs in headful mode](https://github.com/harvard-lil/scoop-witness-api/blob/main/scoop_witness_api/config.py#L88), which [generally yields better results](https://github.com/harvard-lil/scoop#should-i-run-scoop-in-headful-mode). 
 
 Running in headful mode requires that a window system, if none is available:
 - You may consider switching to headless mode (`--headless true`)
@@ -361,7 +361,7 @@ This project automatically pulls the latest Amazon RDS certificates as `./rds.pe
 This project uses [pytest](https://docs.pytest.org/en/6.2.x/contents.html). 
 
 The test suite creates _"throw-away"_ databases for the duration of the test session. 
-It will try to use [MySQL's default credentials](https://github.com/harvard-lil/scoop-rest-api/blob/main/scoop_witness_api/conftest.py) to do so, unless provided with test-specific credentials via the following environment variables:
+It will try to use [MySQL's default credentials](https://github.com/harvard-lil/scoop-witness-api/blob/main/scoop_witness_api/conftest.py) to do so, unless provided with test-specific credentials via the following environment variables:
 - `TESTS_DATABASE_HOST`
 - `TESTS_DATABASE_USERNAME`
 - `TESTS_DATABASE_PASSWORD`
