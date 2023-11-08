@@ -67,7 +67,7 @@ PROCESSES_PROXY_PORT = 9000
 #
 SCOOP_CLI_OPTIONS = {
     "--log-level": "info",
-    # "--signing-url": """,
+    # "--signing-url": "",
     # "--signing-token": "",
     "--screenshot": "true",
     "--pdf-snapshot": "false",
