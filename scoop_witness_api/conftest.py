@@ -4,67 +4,28 @@ import os
 from tempfile import TemporaryDirectory
 
 import pytest
-import pymysql
-from dotenv import load_dotenv
 
 from scoop_witness_api import create_app
-
-load_dotenv()
 
 
 @pytest.fixture(scope="session")
 def app():
     """
     Creates a test-specific app context as well as a dedicated database for this test suite.
-
-    Default test credentials can be replaced using environment variables:
-    - TESTS_DATABASE_HOST
-    - TESTS_DATABASE_USERNAME
-    - TESTS_DATABASE_PASSWORD
-    - TESTS_DATABASE_PORT
     """
     with TemporaryDirectory() as temporary_dir:
-        DATABASE_HOST = "127.0.0.1"
-        DATABASE_USERNAME = "root"
-        DATABASE_PASSWORD = ""
-        DATABASE_PORT = 3306
-        DATABASE_NAME = str(uuid.uuid4())
-        TEMPORARY_STORAGE_PATH = temporary_dir
+        DATABASE_PATH = os.path.join(temporary_dir, "database")
+        TEMPORARY_STORAGE_PATH = os.path.join(temporary_dir, "storage")
+        DATABASE_FILENAME = f"{uuid.uuid4()}.db"
 
-        # Default test credentials can be replaced using environment variables.
-        if "TESTS_DATABASE_HOST" in os.environ:
-            DATABASE_HOST = os.environ["TESTS_DATABASE_HOST"]
-
-        if "TESTS_DATABASE_USERNAME" in os.environ:
-            DATABASE_USERNAME = os.environ["TESTS_DATABASE_USERNAME"]
-
-        if "TESTS_DATABASE_PASSWORD" in os.environ:
-            DATABASE_PASSWORD = os.environ["TESTS_DATABASE_PASSWORD"]
-
-        if "TESTS_DATABASE_PORT" in os.environ:
-            DATABASE_PORT = int(os.environ["TESTS_DATABASE_PORT"])
-
-        # Create temporary database
-        db = pymysql.connect(
-            host=DATABASE_HOST,
-            user=DATABASE_USERNAME,
-            passwd=DATABASE_PASSWORD,
-            port=DATABASE_PORT,
-        )
-
-        db.cursor().execute(
-            f"CREATE DATABASE `{DATABASE_NAME}` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
-        )
+        os.makedirs(TEMPORARY_STORAGE_PATH, exist_ok=True)
+        os.makedirs(DATABASE_FILENAME, exist_ok=True)
 
         # Create app context
         app = create_app(
             {
-                "DATABASE_USERNAME": DATABASE_USERNAME,
-                "DATABASE_PASSWORD": DATABASE_PASSWORD,
-                "DATABASE_HOST": DATABASE_HOST,
-                "DATABASE_PORT": DATABASE_PORT,
-                "DATABASE_NAME": DATABASE_NAME,
-                "DATABASE_CA_PATH": "",
+                "DATABASE_PATH": DATABASE_PATH,
+                "DATABASE_FILENAME": DATABASE_FILENAME,
                 "MAX_PENDING_CAPTURES": 5,
                 "EXPOSE_SCOOP_LOGS": True,
                 "EXPOSE_SCOOP_CAPTURE_SUMMARY": True,
@@ -82,14 +43,6 @@ def app():
 
         # Run tests
         yield app
-
-        # Drop database once test session is complete
-        #
-        # Note: This won't run if the test suite crashes.
-        # This gives us the opportunity to inspect the database that was used during the crash.
-        # This is TBD -- we can also cleanup on crash.
-        db.cursor().execute(f"DROP SCHEMA `{DATABASE_NAME}`;")
-        db.close()
 
 
 @pytest.fixture(autouse=True)

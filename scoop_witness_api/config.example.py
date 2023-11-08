@@ -25,23 +25,11 @@ EXPOSE_SCOOP_CAPTURE_SUMMARY = True
 #
 # Database settings
 #
-DATABASE_USERNAME = "root"
-""" (MySQL) Database username. Should be provided via an environment variable. """
+DATABASE_PATH = "./database"
+""" (SQLite) Database storage path. """
 
-DATABASE_PASSWORD = ""
-""" (MySQL) Database password. Should be provided via an environment variable. """
-
-DATABASE_HOST = "127.0.0.1"
-""" (MySQL) Database host. Should be provided via an environment variable. """
-
-DATABASE_PORT = 3306
-""" (MySQL) Database port. Should be provided via an environment variable. """
-
-DATABASE_NAME = "scoop_api"
-""" (MySQL) Database name. Should be provided via an environment variable. """
-
-DATABASE_CA_PATH = ""
-""" (MySQL) If provided, will be used to connect to MySQL via SSL. """
+DATABASE_FILENAME = "scoop.db"
+""" (SQLite) Database filename. """
 
 #
 # Paths settings
