@@ -4,7 +4,7 @@
 import uuid
 
 import peewee
-from playhouse.mysql_ext import JSONField
+from playhouse.sqlite_ext import JSONField
 
 from ..models import AccessKey
 from ..utils import get_db

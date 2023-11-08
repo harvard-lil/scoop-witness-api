@@ -30,7 +30,13 @@ def config_check() -> bool:
     config = current_app.config
 
     # Check presence of required path-like / url-like properties
-    for prop in ["TEMPORARY_STORAGE_PATH", "API_DOMAIN", "API_STORAGE_URL"]:
+    for prop in [
+        "TEMPORARY_STORAGE_PATH",
+        "DATABASE_PATH",
+        "DATABASE_FILENAME",
+        "API_DOMAIN",
+        "API_STORAGE_URL",
+    ]:
         if prop not in config:
             raise Exception(f"config object must contain a {prop} property")
 
@@ -50,11 +56,6 @@ def config_check() -> bool:
 
     # Misc (just check presence)
     for prop in [
-        "DATABASE_USERNAME",
-        "DATABASE_PASSWORD",
-        "DATABASE_HOST",
-        "DATABASE_PORT",
-        "DATABASE_NAME",
         "MAX_PENDING_CAPTURES",
         "EXPOSE_SCOOP_LOGS",
         "TEMPORARY_STORAGE_EXPIRATION",

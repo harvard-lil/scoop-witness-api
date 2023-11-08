@@ -7,7 +7,7 @@ A simple REST API for witnessing the web using the Scoop web archiving capture e
 This first iteration is built around: 
 - [Flask](https://flask.palletsprojects.com/en/2.3.x/)
 - [Custom Flask commands](https://flask.palletsprojects.com/en/2.3.x/cli/#custom-commands)
-- [MySQL](https://www.mysql.com/)
+- [SQLite](https://www.sqlite.org/index.html)
 
 ---
 
@@ -29,29 +29,17 @@ Note: this application has only been tested on UNIX-like systems.
 - [Python 3.9+](https://www.python.org/downloads/)
 - [Node.js 18+](https://nodejs.org/en)
 - [Poetry](https://python-poetry.org/)
-- [MySQL](https://www.mysql.com/)
 
 ### 2. Project-level dependencies
 The following shortcut will:
 - Install all Python dependencies using `poetry`
 - Install Scoop and related dependencies using `npm`
-- Pull the lates version of Amazon RDS CA certificates as `rds.pem` (needed if reaching one of our remote DBs).
 
 ```bash
 bash install.sh
 ```
 
-### 3. Setting up MySQL
-
-The Scoop REST API only needs an empty MySQL database to operate, which it can then programmatically populate.
-
-```SQL
-CREATE DATABASE `scoop_api` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-```
-
-For local development and tests, MySQL can be installed and automatically setup via `brew install mysql` on Mac OS.
-
-### 4. Setting up configuration
+### 3. Setting up configuration
 
 Copy `scoop_witness_api/config.example.py` as `scoop_witness_api/config.py` and adjust as needed.
 
@@ -61,21 +49,21 @@ If you would like to use an alternative way of providing configuration, see:
 ... and update `scoop_witness_api/__init__.py` accordingly.
 
 
-### 5. Setting up the database tables
-The following command creates and initializes the database tables for the application to use. The database must already exist.
+### 4. Setting up the database
+The following command creates and initializes the database tables for the application to use. 
 
 ```bash
 poetry run flask create-tables
 ```
 
-### 6. Starting the server
+### 5. Starting the server
 The following command starts the development server on port 5000.
 
 ```bash
 poetry run flask run 
 ```
 
-### 7. Starting the capture process
+### 6. Starting the capture process
 The following command starts the capture process.
 
 ```bash
@@ -345,13 +333,6 @@ Running in headful mode requires that a window system, if none is available:
 xvfb-run --auto-servernum -- flask start-parallel-capture-processes
 ```
 
-### MySQL over SSL
-Using SSL when connecting to MySQL is generally advised for security reasons, and should be enforced on the server side whenever possible.
-
-To ensure that MySQL connects over SSL, make sure to populate the `DATABASE_CA_PATH` environment variable appropriately to make it point to a certificate chain.
-
-This project automatically pulls the latest Amazon RDS certificates as `./rds.pem`.
-
 [👆 Back to the summary](#summary)
 
 ---
@@ -360,12 +341,7 @@ This project automatically pulls the latest Amazon RDS certificates as `./rds.pe
 
 This project uses [pytest](https://docs.pytest.org/en/6.2.x/contents.html). 
 
-The test suite creates _"throw-away"_ databases for the duration of the test session. 
-It will try to use [MySQL's default credentials](https://github.com/harvard-lil/scoop-witness-api/blob/main/scoop_witness_api/conftest.py) to do so, unless provided with test-specific credentials via the following environment variables:
-- `TESTS_DATABASE_HOST`
-- `TESTS_DATABASE_USERNAME`
-- `TESTS_DATABASE_PASSWORD`
-- `TESTS_DATABASE_PORT`
+The test suite creates a _"throw-away"_ database for the duration of the test session. 
 
 The test suite will also create a temporary storage folder that gets deleted at the end of the test suite.
 

@@ -1,5 +1,6 @@
 node_modules
 storage
+database
 *.pyc
 *.db
 notes.md
