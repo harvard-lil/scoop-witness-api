@@ -255,19 +255,6 @@ def start_capture_process(proxy_port=9000, single_run=False) -> None:
 
             capture.save()
 
-            # Call webhook, if any
-            if capture.callback_url:
-                try:
-                    click.echo(f"{log_prefix(capture)} Callback to {capture.callback_url}")
-
-                    # Workaround to be able to use Flask's jsonify, for consistency across the app
-                    json_data = json.loads(jsonify(capture_to_dict(capture)).data.decode("utf-8"))
-
-                    requests.post(capture.callback_url, json=json_data, timeout=10)
-                except Exception:
-                    click.echo(f"{log_prefix(capture)} Callback to {capture.callback_url} failed")
-                    click.echo(traceback.format_exc())  # Full trace should be in the logs
-
             #
             # Break loop if we are in single-run mode
             #
@@ -313,6 +300,21 @@ def start_capture_process(proxy_port=9000, single_run=False) -> None:
                 capture.save()  # Update capture state
 
             break
+        #
+        # In any case: call webhook, if any
+        #
+        finally:
+            if capture and capture.callback_url:
+                try:
+                    click.echo(f"{log_prefix(capture)} Callback to {capture.callback_url}")
+
+                    # Workaround to be able to use Flask's jsonify, for consistency across the app
+                    json_data = json.loads(jsonify(capture_to_dict(capture)).data.decode("utf-8"))
+
+                    requests.post(capture.callback_url, json=json_data, timeout=10)
+                except Exception:
+                    click.echo(f"{log_prefix(capture)} Callback to {capture.callback_url} failed")
+                    click.echo(traceback.format_exc())  # Full trace should be in the logs
 
 
 def log_prefix(capture=None) -> str:
