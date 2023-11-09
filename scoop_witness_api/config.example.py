@@ -11,7 +11,7 @@ If you would like to use an alternative way of providing configuration, see:
 # Security settings
 #
 ACCESS_KEY_SALT = b"$2b$12$rXmm9AWx82fxw9Jbs1PXI.zebeXu4Ydi1huwxyH5k9flyhccBBTxa"  # default / dev
-""" Salt to be used to hash access keys. """
+""" Salt to be used to hash access keys. Use bcrypt.gensalt() to generate a new one. """
 
 MAX_PENDING_CAPTURES = 300
 """ Stop accepting new capture requests if there are over X captures in the queue. """
