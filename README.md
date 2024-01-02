@@ -39,6 +39,11 @@ The following shortcut will:
 bash install.sh
 ```
 
+Depending on your system configuration, the following step might be needed to install Playwright's system-level dependencies:
+```bash
+sudo npx playwright install-deps chromium
+```
+
 ### 3. Creating a config file
 
 Copy `scoop_witness_api/config.example.py` as `scoop_witness_api/config.py` and adjust as needed.
