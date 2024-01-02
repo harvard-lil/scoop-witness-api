@@ -39,7 +39,7 @@ The following shortcut will:
 bash install.sh
 ```
 
-### 3. Setting up configuration
+### 3. Creating a config file
 
 Copy `scoop_witness_api/config.example.py` as `scoop_witness_api/config.py` and adjust as needed.
 
@@ -56,14 +56,22 @@ The following command creates and initializes the database tables for the applic
 poetry run flask create-tables
 ```
 
-### 5. Starting the server
+### 5. Creating an access key
+
+The API is being authentication. Access keys can be created with the `create-access-key` command.
+
+```bash
+poetry run flask create-access-key --label="My key"
+```
+
+### 6. Starting the server
 The following command starts the development server on port 5000.
 
 ```bash
 poetry run flask run 
 ```
 
-### 6. Starting the capture process
+### 7. Starting the capture process
 The following command starts the capture process.
 
 ```bash
