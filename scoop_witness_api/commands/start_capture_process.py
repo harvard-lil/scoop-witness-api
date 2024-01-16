@@ -62,12 +62,6 @@ def start_capture_process(proxy_port=9000, single_run=False) -> None:
             scoop_options = current_app.config["SCOOP_CLI_OPTIONS"]
             """ Shortcut to app-level Scoop CLI options. """
 
-            scoop_stdout = None
-            """ STDOUT from Scoop run. """
-
-            scoop_stderr = None
-            """ STDERR from Scoop run. """
-
             scoop_exit_code = None
             """ Exit code from Scoop run. """
 
@@ -174,27 +168,17 @@ def start_capture_process(proxy_port=9000, single_run=False) -> None:
                 scoop_args.append(key)
                 scoop_args.append(str(value))
 
-            process = subprocess.Popen(
+            process = subprocess.run(
                 scoop_args,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
-
-            scoop_stdout, scoop_stderr = process.communicate(
-                # Enforce hard timeout after SCOOP_TIMEOUT_FUSE seconds past capture timeout
+                capture_output=True,
+                text=True,
                 timeout=scoop_options["--capture-timeout"] / 1000
-                + int(current_app.config["SCOOP_TIMEOUT_FUSE"])
+                + int(current_app.config["SCOOP_TIMEOUT_FUSE"]),
             )
 
-            scoop_exit_code = process.poll()
-
-            if scoop_exit_code is None:  # Kill rogue process after 5 second wait
-                click.echo(f"{log_prefix(capture)} Process still running - terminating in 5s")
-                time.sleep(5)
-                process.kill()
-
-            capture.stdout_logs = scoop_stdout.decode("utf-8")
-            capture.stderr_logs = scoop_stderr.decode("utf-8")
+            scoop_exit_code = process.returncode
+            capture.stdout_logs = process.stdout
+            capture.stderr_logs = process.stderr
 
             #
             # Check capture results
@@ -272,8 +256,6 @@ def start_capture_process(proxy_port=9000, single_run=False) -> None:
                 capture.save()
                 click.echo(f"{log_prefix(capture)} Failed (timeout violation)")
 
-            if process:
-                process.kill()
         #
         # Catch-all
         #
