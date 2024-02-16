@@ -1,6 +1,7 @@
 """
 `commands.status` module: Controller for the `status` CLI command.
 """
+
 import click
 from flask import current_app
 
@@ -14,7 +15,9 @@ def status() -> None:
     - List and status of access keys
     - Capture queue stats (pending, started)
     """
-    captures = Capture.select().order_by("id_capture")
+    captures = (
+        Capture.select().where(Capture.status.in_(["pending", "started"])).order_by("id_capture")
+    )
     captures_pending = 0
     captures_started = 0
 
