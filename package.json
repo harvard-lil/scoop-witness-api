@@ -9,6 +9,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@harvard-lil/scoop": "^0.6.7"
+    "@harvard-lil/scoop": "^0.6.8"
   }
 }
